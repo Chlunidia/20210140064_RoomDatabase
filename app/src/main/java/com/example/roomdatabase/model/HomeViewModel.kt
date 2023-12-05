@@ -15,6 +15,14 @@ class HomeViewModel (private val studentsRepository: StudentsRepository): ViewMo
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
+    val homeUIState: StateFlow<HomeUIState> = studentsRepository.getAllStudentsStream()
+        .filterNotNull()
+        .map { HomeUIState(studentsList = it.toList()) }
+        .stateIn(scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = HomeUIState()
+        )
+
     data class HomeUIState(
         val studentsList: List<Students> = listOf()
     )
