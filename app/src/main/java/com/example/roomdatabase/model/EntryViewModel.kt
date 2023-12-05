@@ -20,6 +20,12 @@ class EntryViewModel(private val studentsRepository: StudentsRepository): ViewMo
     fun updateUIState(studentDetails: StudentDetails) {
         uiStateStudents = StudentsUIState(studentDetails = studentDetails, isEntryValid = inputValidation(studentDetails))
     }
+
+    suspend fun saveStudents() {
+        if (inputValidation()) {
+            studentsRepository.insertStudent(uiStateStudents.studentDetails.toStudents())
+        }
+    }
 }
 
 data class StudentsUIState(
