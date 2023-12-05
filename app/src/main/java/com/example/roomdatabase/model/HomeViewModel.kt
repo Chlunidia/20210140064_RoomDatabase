@@ -14,4 +14,8 @@ class HomeViewModel (private val studentsRepository: StudentsRepository): ViewMo
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
+
+    data class HomeUIState(
+        val studentsList: List<Students> = listOf()
+    )
 }
