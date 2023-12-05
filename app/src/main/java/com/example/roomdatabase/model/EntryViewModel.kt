@@ -24,6 +24,11 @@ fun StudentDetails.toStudents(): Students = Students(
     telp = telp
 )
 
+fun Students.toStudentsUIState(isEntryValid: Boolean = false): StudentsUIState = StudentsUIState(
+    studentDetails = this.toStudentDetails(),
+    isEntryValid = isEntryValid
+)
+
 fun Students.toStudentDetails(): StudentDetails = StudentDetails(
     id = id,
     name = name,
