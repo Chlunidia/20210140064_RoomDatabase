@@ -23,3 +23,10 @@ fun StudentDetails.toStudents(): Students = Students(
     address = address,
     telp = telp
 )
+
+fun Students.toStudentDetails(): StudentDetails = StudentDetails(
+    id = id,
+    name = name,
+    address = address,
+    telp = telp
+)
