@@ -1,8 +1,21 @@
 package com.example.roomdatabase.model
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import com.example.roomdatabase.data.Students
+import com.example.roomdatabase.repository.StudentsRepository
 
-class EntryViewModel {
+class EntryViewModel(private val studentsRepository: StudentsRepository): ViewModel() {
+    var uiStateStudents by mutableStateOf(StudentsUIState())
+        private set
+
+    private fun inputValidation(uiState: StudentDetails = uiStateStudents.studentDetails): Boolean {
+        return with(uiState) {
+            name.isNotBlank() && address.isNotBlank() && telp.isNotBlank()
+        }
+    }
 }
 
 data class StudentsUIState(
