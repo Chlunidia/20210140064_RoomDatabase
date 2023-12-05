@@ -16,6 +16,10 @@ class EntryViewModel(private val studentsRepository: StudentsRepository): ViewMo
             name.isNotBlank() && address.isNotBlank() && telp.isNotBlank()
         }
     }
+
+    fun updateUIState(studentDetails: StudentDetails) {
+        uiStateStudents = StudentsUIState(studentDetails = studentDetails, isEntryValid = inputValidation(studentDetails))
+    }
 }
 
 data class StudentsUIState(
