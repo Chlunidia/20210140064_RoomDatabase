@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +18,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.roomdatabase.R
 import com.example.roomdatabase.model.StudentDetails
+import com.example.roomdatabase.model.StudentsUIState
 import com.example.roomdatabase.navigation.NavigationDestination
 
 object EntryDestination : NavigationDestination {
     override val route = "item_entry"
     override val titleRes = R.string.entry_siswa
+}
+
+@Composable
+fun StudentsEntryBody(
+    uiStateSiswa: StudentsUIState,
+    onSiswaValueChange: (StudentDetails) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
+    ) {
+        StudentsInputForm(
+            studentDetails = uiStateSiswa.studentDetails,
+            onValueChange = onSiswaValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            enabled = uiStateSiswa.isEntryValid,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.btn_submit))
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
