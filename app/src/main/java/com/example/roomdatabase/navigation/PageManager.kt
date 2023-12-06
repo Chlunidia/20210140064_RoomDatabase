@@ -11,7 +11,10 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import com.example.roomdatabase.R
+import com.example.roomdatabase.ui.page.HomeDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,4 +38,19 @@ fun StudentsTopAppBar(
                 }
             }
         })
+}
+
+@Composable
+fun NavigationHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = HomeDestination.route,
+        modifier = Modifier
+    )
+    {
+
+    }
 }
