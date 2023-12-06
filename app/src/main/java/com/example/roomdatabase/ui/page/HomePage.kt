@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
@@ -24,6 +26,22 @@ import com.example.roomdatabase.navigation.NavigationDestination
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.app_name
+}
+
+@Composable
+fun StudentsList(
+    studentsItem: List<Students>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = Modifier) {
+        items(items = studentsItem, key = { it.id }) { person ->
+            StudentsData(
+                students = person,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+            )
+        }
+    }
 }
 
 @Composable
