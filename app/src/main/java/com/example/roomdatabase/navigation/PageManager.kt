@@ -13,8 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.roomdatabase.R
+import com.example.roomdatabase.ui.page.EntryDestination
 import com.example.roomdatabase.ui.page.HomeDestination
+import com.example.roomdatabase.ui.page.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,6 +54,10 @@ fun NavigationHost(
         modifier = Modifier
     )
     {
-
+        composable(HomeDestination.route) {
+            HomeScreen(
+                navigateToItemEntry = { navController.navigate(EntryDestination.route) },
+            )
+        }
     }
 }
