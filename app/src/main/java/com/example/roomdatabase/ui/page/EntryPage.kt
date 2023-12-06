@@ -4,17 +4,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +29,8 @@ import com.example.roomdatabase.model.ProviderViewModel
 import com.example.roomdatabase.model.StudentDetails
 import com.example.roomdatabase.model.StudentsUIState
 import com.example.roomdatabase.navigation.NavigationDestination
+import com.example.roomdatabase.navigation.StudentsTopAppBar
+import kotlinx.coroutines.launch
 
 object EntryDestination : NavigationDestination {
     override val route = "item_entry"
@@ -40,6 +46,30 @@ fun StudentsEntryScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            StudentsTopAppBar(
+                title = stringResource(EntryDestination.titleRes),
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior
+            )
+        }) { innerPadding ->
+        StudentsEntryBody(
+            uiStateSiswa = viewModel.uiStateStudents,
+            onSiswaValueChange = viewModel::updateUIState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.saveStudents()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
 }
 
 @Composable
