@@ -14,10 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.roomdatabase.R
 import com.example.roomdatabase.ui.page.EntryDestination
 import com.example.roomdatabase.ui.page.HomeDestination
 import com.example.roomdatabase.ui.page.HomeScreen
+import com.example.roomdatabase.ui.page.StudentsEntryScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +60,9 @@ fun NavigationHost(
             HomeScreen(
                 navigateToItemEntry = { navController.navigate(EntryDestination.route) },
             )
+        }
+        composable(EntryDestination.route) {
+            StudentsEntryScreen(navigateBack = { navController.popBackStack() })
         }
     }
 }
